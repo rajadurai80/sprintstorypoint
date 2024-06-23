@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     var currentUserName = null;
 
 
-    localStorage.removeItem('participantId');
+    //localStorage.removeItem('participantId');
 
     //for testing purposes, generate a random participantId
     //localStorage.setItem('participantId', Math.floor(Math.random() * 1000));
@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .select();
             sendMessage('join', 'Joined new user');
 
-            //location.reload();
+            location.reload();
         }
 
     });

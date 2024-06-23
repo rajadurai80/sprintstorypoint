@@ -192,6 +192,12 @@ p.card-text {
     color: gray;
 }
 
+.video-thumbnail {
+    width: 100%;
+    max-width: 600px;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;
