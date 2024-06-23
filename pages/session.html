@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrum game Session</title>
+    <link href="../dist/css/coreui.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../dist/js/coreui.bundle.min.js"></script>
+    <script src="../scripts/common.js"></script>
+    <script src="../scripts/session.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+</head>
+
+<body onload="checkAuth()"> <!-- Add onload="checkAuth()" to the body tag -->
+    <script src="../scripts/header.js"></script>
+    <div id="content" class="container text-center-custom1">
+        <button class="btn btn-warning btn-sm" onclick="copySessionLink()">Copy Session Link</button>
+        <div id="auth-content" class="auth-content" style="display: none;">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="container">
+                        <div class="top-row-custom2">
+                            <div id="session-info-container">
+                                <h1><span class="badge rounded-pill text-bg-custom1">Admin View</span></h1>
+                                <div id="session-info"></div>
+                            </div>
+                            <div id="story-info-container">
+                                <div id="story-info"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>
+                                Participants:
+                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill" id="clear-participants-btn">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="/node_modules/@coreui/icons/sprites/free.svg#cil-x-circle"></use>
+                                    </svg>      
+                                    Delete All                      
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-info rounded-pill" id="show-participants-points-btn">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="/node_modules/@coreui/icons/sprites/free.svg#cil-bell"></use>
+                                    </svg>      
+                                    Show Points                      
+                                </button>
+                            </h3>
+                            <div class="participant-tiles" id="participants-list"></div>
+                            <br>
+                            <div id="stories-list">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Story Title</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="stories-tbody">
+                                        <!-- Stories will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="text" id="story-title" class="form-control" placeholder="Add New Story"
+                                    aria-label="Story">
+                                <textarea class="form-control" id="story-description" placeholder="Story Description"
+                                    aria-label="Description"></textarea>
+                                <button class="btn btn-outline-secondary" type="button" id="add-story-btn">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="no-auth-content" class="no-auth-content">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="container">
+                        <h1><span class="badge rounded-pill text-bg-custom1">Play game</span></h1>
+                        <p>Please login to play game</p>
+                        <button class="btn btn-outline-secondary" type="button" id="login-btn">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

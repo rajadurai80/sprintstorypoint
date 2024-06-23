@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrum Poker Session</title>
+    <link href="../dist/css/coreui.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../dist/js/coreui.bundle.min.js"></script>
+    <script src="../scripts/common.js"></script>
+    <script src="../scripts/storypoint.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+</head>
+
+<body>
+    <script src="../scripts/header.js"></script>
+    <div id="content" class="container text-center-custom1">
+        <div id="auth-content" class="auth-content" style="display: none;">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="container">
+                        <div class="top-row-custom1">
+                            <div id="current-user-tile" class="participant-tile"></div>
+                            <div class="player-view">
+                                <h4>Story Point Estimation</span></h4>
+                                <div id="story-info"></div>
+                            </div>
+                        </div>
+                        <h3>Participants</h3>
+                        <div class="participant-tiles" id="participants-list">
+                            <!-- Participant tiles will be populated here -->
+                        </div>
+                        <h3>Choose Your Estimate</h3>
+                        <div id="cards">
+                            <button class="card-custom" onclick="submitEstimate(1)">1</button>
+                            <button class="card-custom" onclick="submitEstimate(2)">2</button>
+                            <button class="card-custom" onclick="submitEstimate(3)">3</button>
+                            <button class="card-custom" onclick="submitEstimate(5)">5</button>
+                            <button class="card-custom" onclick="submitEstimate(8)">8</button>
+                            <button class="card-custom" onclick="submitEstimate(13)">13</button>
+                            <button class="card-custom" onclick="submitEstimate(21)">21</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="walk-out-user"
+                style="--cui-btn-padding-y: .25rem; --cui-btn-padding-x: .5rem; --cui-btn-font-size: .75rem;">
+                Walk Out
+            </button>
+        </div>
+        <div id="no-auth-content-logged-out" style="display: none; color: rgb(6, 105, 51);">
+            User left the session.
+        </div>
+        <div id="db-error" style="display: none; color: red;">
+            Error: DB Access Error.
+        </div>
+        <div id="no-auth-content-error" style="display: none; color: red;">
+            Error: Session ID not valid.
+        </div>
+        <div id="no-auth-content" class="no-auth-content">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="container">
+                        <h1><span class="badge rounded-pill">Play Poker</span></h1>
+                        <p>Join to session to participate ...</p>
+                        <div class="input-group mb-3" id="create-session-container">
+                            <input type="text" class="form-control" id="login-name-anom" placeholder="User Name"
+                                aria-label="User Name" aria-describedby="create-user-btn">
+                            <button class="btn btn-outline-secondary" type="button" id="join-in-user">Join
+                                Session</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>
