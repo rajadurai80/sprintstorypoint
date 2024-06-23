@@ -19,14 +19,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     const sendMessage = async (evnt, pmesg) => {
-        console.log('sendMessage:', evnt, pmesg);
         const channelB = _supabase.channel(`session-${sessionId}`);
-        console.log('roomId', channelB);
 
         channelB.subscribe((status) => {
             // Wait for successful connection
             if (status !== 'SUBSCRIBED') {
-                console.log('Channel not yet subscribed')
+                console.error('Channel not yet subscribed')
               return null
             }
           
@@ -36,7 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
               event: evnt,
               payload: { message: pmesg },
             })
-            .then((resp) => console.log(resp))
           })
 
 
@@ -47,20 +44,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     var currentStory = null;
 
-    console.log('channelMain:', channelMain);
-
     var gameInProgress = false;
 
     // Simple function to log any messages we receive
     function messageJoined(payload) {
-        console.log('messageJoined:', payload);
-        //location.reload();
         loadParticipants();
     }
 
     function messageLeft(payload) {
-        console.log('messageLeft:', payload);
-        //location.reload();
         loadParticipants();
     }
 
@@ -99,12 +90,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             .eq('session_id', sessionId);
         if (error) console.error(error);
         else {
-            console.log('data123:', data);
             participantsListDiv.innerHTML = '';
 
             data.forEach(participant => {
-                console.log('participant:', participant);
-
                 const imageNumber = Math.floor(Math.random() * 16) + 1;
                 const userName = participant.user_name.length > 20 ? participant.user_name.substring(0, 20) : participant.user_name;
 
@@ -135,7 +123,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const displayCurrentStory = async () => {
-        console.log('currentStory:', currentStory);
         storyInfoDiv.innerHTML = `
         Selected Story: ${currentStory.title}
                 
@@ -304,9 +291,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             startButton.disabled = false;
             deleteButton.disabled = false;
         }
-
-        console.log('storyId:', storyId);
-
         const { data, error } = await _supabase
             .from('stories')
             .update({ is_active: false })

@@ -20,11 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     //for testing purposes, generate a random participantId
     //localStorage.setItem('participantId', Math.floor(Math.random() * 1000));
     const participantId = localStorage.getItem('participantId');
-    console.log('TEST test2');
 
     sessionStorage.setItem('sessionId', sessionId);
-
-    console.log('sessionId:', sessionId);
     //const storyId = urlParams.get('storyId');
 
     if (!sessionId) {
@@ -41,14 +38,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const sendMessage = async (evnt, pmesg) => {
-        console.log('sendMessage:', evnt, pmesg);
         const channelB = _supabase.channel(`session-${sessionId}`);
-        console.log('roomId', channelB);
 
         channelB.subscribe((status) => {
             // Wait for successful connection
             if (status !== 'SUBSCRIBED') {
-                console.log('Channel not yet subscribed')
+                console.error('Channel not yet subscribed')
                 return null
             }
 
@@ -58,7 +53,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 event: evnt,
                 payload: { message: pmesg },
             })
-                .then((resp) => console.log(resp))
         })
 
 
@@ -80,28 +74,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Join a room/topic. Can be anything except for 'realtime'.
     const channelA = _supabase.channel(`session-${sessionId}`);
-    console.log('roomId', channelA);
 
     // Simple function to log any messages we receive
     function messageJoined(payload) {
-        console.log(payload)
-        //location.reload();
         loadParticipants();
     }
 
     function messageLeft(payload) {
-        console.log(payload)
-        //location.reload();
         loadParticipants();
     }
 
     function messageStory(payload) {
-        console.log(payload)
         loadStory();
     }
 
     function messageEstimate(payload) {
-        console.log(payload)
         loadParticipants();
     }
 
@@ -128,8 +115,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             (payload) => messageEstimate(payload)
         ).
         subscribe()
-
-    console.log("participantId:", participantId);
 
     if (participantId !== null) {
         //check if participantId exists in session_participants
@@ -180,10 +165,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             .eq('session_id', sessionId);
         if (error) console.error(error);
         else {
-            console.log('data123:', data);
             participantsListDiv.innerHTML = '';
             data.forEach(participant => {
-                console.log('participant:', participant);
                 const imageNumber = Math.floor(Math.random() * 16) + 1;
                 const userName = participant.user_name.length > 20 ? participant.user_name.substring(0, 20) : participant.user_name;
 
@@ -241,7 +224,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (error) console.error(error);
         else {
             const storyId = data[0].story_id;
-            console.log('LOAD Story storyId:', storyId);
 
             if (!storyId) {
                 currentStoryId = null;
@@ -263,7 +245,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     .eq('id', storyId);
                 if (storyError) console.error(storyError);
                 else {
-                    console.log('story:', story);
                     storyInfoDiv.innerHTML = `
                     <p>Story: <span class="badge badge-sm custom-bage rounded-pill text-bg-success">${story[0].title}</span></p>
                 `;
@@ -273,7 +254,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const checkParticipant = async () => {
-        console.log('participantId:', participantId);
         if (!participantId) {
             document.getElementById('auth-content').style.display = 'none';
             document.getElementById('no-auth-content').style.display = 'block';
@@ -291,7 +271,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 document.getElementById('auth-content').style.display = 'none';
                 document.getElementById('no-auth-content').style.display = 'block';
             } else {
-                console.log('data:', data);
                 document.getElementById('auth-content').style.display = 'block';
                 document.getElementById('no-auth-content').style.display = 'none';
                 loadParticipants();
@@ -300,7 +279,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     userJoinButton.addEventListener('click', async () => {
-        console.log('userJoinButton clicked');
 
         if (!anomLoginNameInput.value) {
             alert('Name is required.');
@@ -322,15 +300,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (error) {
             console.error('Anom login error:', error);
         } else {
-            console.log('data:', JSON.stringify(userSession));
             localStorage.setItem('participantId', userSession[0].id);
 
             const { data, error } = await _supabase
                 .from('session_participants')
                 .insert({ session_id: sessionId, user_id: userSession[0].id, user_name: userSession[0].name })
                 .select();
-            console.log('data1:', JSON.stringify(data));
-
             sendMessage('join', 'Joined new user');
 
             //location.reload();
@@ -348,15 +323,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const sessionId = sessionStorage.getItem('sessionId');
         const participantId = localStorage.getItem('participantId');
 
-        console.log('sessionId:', sessionId);
-        console.log('participantId:', participantId);
-
         const { data, error } = await _supabase
             .from('session_participants')
             .delete()
             .eq('session_id', sessionId)
             .eq('user_id', participantId);
-        console.log('data:', JSON.stringify(data));
         if (error) {
             console.error(error);
         } else {
@@ -398,7 +369,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     window.submitEstimate = async (estimate) => {
-        console.log('submitEstimate:', estimate);
         if (estimate === '') {
             alert('Please enter a valid estimate');
             return;
