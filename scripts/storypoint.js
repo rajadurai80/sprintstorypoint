@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userJoinButton = document.getElementById('join-in-user');
     const walkOutUserButton = document.getElementById('walk-out-user');
     const anomLoginNameInput = document.getElementById('login-name-anom');
+    const anomEmailInput = document.getElementById('login-email-anom');
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('sessionId');
     const storyInfoDiv = document.getElementById('story-info');
@@ -285,6 +286,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
+        if (!anomEmailInput.value) {
+            alert('Email is required.');
+            return;
+        }
+
+
         anomLoggedIn = true;
         //refesh the page to show the user as logged in
         //sotre the user session in local storage
@@ -294,7 +301,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const { data: userSession, error } = await _supabase
             .from('participants')
-            .insert({ name: anomLoginNameInput.value })
+            .insert({ name: anomLoginNameInput.value,
+                email: anomEmailInput.value
+             })
             .select();
 
         if (error) {
@@ -310,7 +319,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             location.reload();
         }
-
     });
 
     const removeUserFromSession = async () => {
@@ -362,11 +370,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Event listener for the browser close or tab close
-    window.addEventListener('beforeunload', async (event) => {
+    //window.addEventListener('beforeunload', async (event) => {
         //await removeUserFromSession();
         // Optional: Show a confirmation dialog to the user
-        event.returnValue = 'Are you sure you want to leave?';
-    });
+    //    event.returnValue = 'Are you sure you want to leave?';
+    //});
 
     window.submitEstimate = async (estimate) => {
         if (estimate === '') {

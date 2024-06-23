@@ -62,16 +62,30 @@
             Error: Session ID not valid.
         </div>
         <div id="no-auth-content" class="no-auth-content">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="container">
-                        <h1><span class="badge text-bg-primary">Sprint Story Point</span></h1>
-                        <p>Join to session to participate ...</p>
-                        <div class="input-group mb-3" id="create-session-container">
-                            <input type="text" class="form-control" id="login-name-anom" placeholder="User Name"
-                                aria-label="User Name" aria-describedby="create-user-btn">
-                            <button class="btn btn-outline-secondary" type="button" id="join-in-user">Join
-                                Session</button>
+
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card mb-4 mx-4">
+                            <div class="card-body p-4">
+                                <h2><span class="badge text-bg-primary">Sprint Story Point</span></h2>
+                                <p class="text-body-secondary">Join the session to participate ...</p>
+                                <div class="input-group mb-3"><span class="input-group-text">
+                                        <svg class="icon">
+                                            <use xlink:href="/node_modules/@coreui/icons/sprites/free.svg#cil-user"></use>
+    
+                                        </svg></span>
+                                    <input class="form-control" type="text" id="login-name-anom" placeholder="Username">
+                                </div>
+                                <div class="input-group mb-3"><span class="input-group-text">
+                                        <svg class="icon">
+                                            <use xlink:href="/node_modules/@coreui/icons/sprites/free.svg#cil-envelope-open">
+                                            </use>
+                                        </svg></span>
+                                    <input class="form-control" type="text" id="login-email-anom" placeholder="Email">
+                                </div>
+                                <button class="btn btn-block btn-success" id="join-in-user" type="button">Join Session</button>
+                            </div>
                         </div>
                     </div>
                 </div>
