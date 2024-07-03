@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://buwvdrznrswfwiwnzylm.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1d3ZkcnpucnN3Zndpd256eWxtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc4NzcwODcsImV4cCI6MjAzMzQ1MzA4N30.SnX5sLu5oYkEglrbOKd3SxRzI5CmRqlyjHQXrWA_l58';
+const SUPABASE_URL = 'https://test.supabase.co';
+const SUPABASE_KEY = '';
 var _supabase = null;
 var isAuthenticated = false;
 
