@@ -95,6 +95,16 @@ export default {
       if (req.headers.get("Upgrade")?.toLowerCase() !== "websocket") {
         return bad("Expected websocket upgrade", req, env, 426);
       }
+
+      // Origin validation for WebSocket (optional but recommended)
+      const origin = req.headers.get("Origin");
+      if (env.ALLOWED_ORIGINS && origin) {
+        const allowed = env.ALLOWED_ORIGINS.split(",").map(s => s.trim());
+        if (!allowed.includes(origin)) {
+          return new Response("Forbidden origin", { status: 403 });
+        }
+      }
+
       const roomId = wsMatch[1];
       const id = env.ROOMS.idFromName(roomId);
       return env.ROOMS.get(id).fetch(req);
