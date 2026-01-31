@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N495XG6269"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-N495XG6269');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint Story Point - Planning Poker for Agile Teams</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="scripts/ws-client.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #1e293b;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 24px 80px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #1e293b 0%, #4f46e5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .hero-micro {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: white;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #475569;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .badge-icon {
+            font-size: 1rem;
+        }
+
+        /* Action Cards */
+        .hero-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .action-card.primary {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+        }
+
+        .action-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .action-card.primary h3 {
+            color: white;
+        }
+
+        .action-card p {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .action-card.primary p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #4f46e5;
+        }
+
+        .btn-primary:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #4f46e5;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: #4338ca;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 0;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+
+        .input-group .btn {
+            white-space: nowrap;
+        }
+
+        .card-footer {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-card:not(.primary) .card-footer {
+            color: #94a3b8;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .action-card.primary .error-message {
+            color: #fecaca;
+        }
+
+        .loading {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading.show {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 24px;
+            background: white;
+        }
+
+        .features-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        .section-header p {
+            font-size: 1.15rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 24px;
+            background: linear-gradient(180deg, #f8fafc 0%, white 100%);
+        }
+
+        .how-it-works-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 80px;
+            right: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed, #a855f7);
+            z-index: 0;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #4f46e5;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.2);
+            border: 3px solid #4f46e5;
+        }
+
+        .step h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: #64748b;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 24px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+        }
+
+        .stats-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-item p {
+            font-size: 0.95rem;
+            color: #94a3b8;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 24px 30px;
+            background: #0f172a;
+            color: white;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-brand h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+            color: #94a3b8;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #6366f1;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-badges {
+                justify-content: center;
+            }
+
+            .hero-cards {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .steps {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .steps::before {
+                display: none;
+            }
+
+            .stats-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon">🎯</div>
+                <span>Sprint Story Point</span>
+            </a>
+            <nav class="nav-links">
+                <a href="pages/about.html">About</a>
+                <a href="pages/contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Planning Poker Made Simple</h1>
+                <p>Streamline your sprint planning with real-time story point estimation. No signup required — just create a room and start estimating.</p>
+                <div class="hero-badges">
+                    <span class="badge"><span class="badge-icon">⚡</span> Real-time sync</span>
+                    <span class="badge"><span class="badge-icon">🔒</span> No signup needed</span>
+                    <span class="badge"><span class="badge-icon">📱</span> Works on any device</span>
+                </div>
+                <p class="hero-micro">Create room → Share link → Vote together</p>
+            </div>
+
+            <div class="hero-cards">
+                <!-- Create Room Card -->
+                <div class="action-card primary">
+                    <h3>Start a New Session</h3>
+                    <p>Create a room instantly and share the link with your team.</p>
+                    <button type="button" class="btn btn-primary" id="create-room-btn">
+                        <span class="btn-text">Create Room</span>
+                        <span class="loading"></span>
+                    </button>
+                    <div class="error-message" id="create-error"></div>
+                    <div class="card-footer">
+                        <span>🕐</span> Rooms expire after 24 hours
+                    </div>
+                </div>
+
+                <!-- Join Room Card -->
+                <div class="action-card">
+                    <h3>Join Existing Room</h3>
+                    <p>Paste the room link or enter the code.</p>
+                    <div class="input-group">
+                        <input type="text" id="room-code-input" placeholder="Link or code (e.g. abc123)" maxlength="200">
+                        <button type="button" class="btn btn-secondary" id="join-room-btn">
+                            Join
+                        </button>
+                    </div>
+                    <div class="error-message" id="join-error"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-inner">
+            <div class="section-header">
+                <h2>Everything You Need</h2>
+                <p>Powerful features to make your sprint planning sessions more efficient and enjoyable.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h4>Real-time Sync</h4>
+                    <p>All participants see updates instantly. No refreshing needed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎴</div>
+                    <h4>Multiple Decks</h4>
+                    <p>Fibonacci, T-shirt sizes, or create your own custom deck.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h4>Built-in Chat</h4>
+                    <p>Discuss estimates with your team without leaving the room.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4>Export Results</h4>
+                    <p>Download your estimates as CSV for easy import to your tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h4>QR Code Sharing</h4>
+                    <p>Generate QR codes for quick mobile access to your room.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h4>Slack & Teams</h4>
+                    <p>Share sessions directly to your team's chat channels.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h4>Statistics</h4>
+                    <p>View min, max, median, and spread of your team's votes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎉</div>
+                    <h4>Fun Mode</h4>
+                    <p>Celebrate team consensus with confetti and animations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="how-it-works-inner">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Get started in seconds with just three simple steps.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Create a Room</h4>
+                    <p>Click the button above to create a new estimation room.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Share the Link</h4>
+                    <p>Invite your team by sharing the room link or QR code.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Start Estimating</h4>
+                    <p>Add stories, vote, and reach consensus together.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Free to use</p>
+            </div>
+            <div class="stat-item">
+                <h3>0</h3>
+                <p>Signups required</p>
+            </div>
+            <div class="stat-item">
+                <h3>25</h3>
+                <p>Participants per room</p>
+            </div>
+            <div class="stat-item">
+                <h3>24h</h3>
+                <p>Room lifetime</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h3>🎯 Sprint Story Point</h3>
+                    <p>The simplest way to run Planning Poker sessions with your agile team. No signup, no hassle — just create and estimate.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="pages/about.html">About Us</a></li>
+                        <li><a href="pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="mailto:admin@agileforwork.com">Email Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2025 Sprint Story Point. All rights reserved.</span>
+                <span>Powered by <a href="https://agileforwork.com" style="color: #6366f1;">AgileForWork</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const createBtn = document.getElementById('create-room-btn');
+            const joinBtn = document.getElementById('join-room-btn');
+            const roomCodeInput = document.getElementById('room-code-input');
+            const createError = document.getElementById('create-error');
+            const joinError = document.getElementById('join-error');
+
+            // Create Room
+            createBtn.addEventListener('click', async () => {
+                createError.style.display = 'none';
+                createBtn.disabled = true;
+                createBtn.querySelector('.loading').classList.add('show');
+                createBtn.querySelector('.btn-text').textContent = 'Creating...';
+
+                try {
+                    const result = await createRoom();
+
+                    if (!result.roomId) {
+                        throw new Error('No roomId in response');
+                    }
+
+                    // Use hash for both roomId and secret
+                    const redirectUrl = `room.html#room=${result.roomId}&secret=${result.roomSecret}`;
+                    window.location.href = redirectUrl;
+                } catch (error) {
+                    createError.textContent = error.message || 'Failed to create room. Please try again.';
+                    createError.style.display = 'block';
+                    createBtn.disabled = false;
+                    createBtn.querySelector('.loading').classList.remove('show');
+                    createBtn.querySelector('.btn-text').textContent = 'Create Room';
+                }
+            });
+
+            // Join Room - accepts full URL or just code
+            joinBtn.addEventListener('click', () => {
+                joinError.style.display = 'none';
+                let input = roomCodeInput.value.trim();
+
+                if (!input) {
+                    joinError.textContent = 'Please enter a room link or code';
+                    joinError.style.display = 'block';
+                    return;
+                }
+
+                // Try to extract room code from URL
+                let roomCode = input;
+
+                // Check if it's a URL
+                if (input.includes('room.html') || input.includes('room=')) {
+                    // Try to parse as URL with hash
+                    const hashMatch = input.match(/[#&?]room=([A-Za-z0-9_-]+)/);
+                    if (hashMatch) {
+                        roomCode = hashMatch[1];
+                    } else {
+                        // Maybe just the path part
+                        const pathMatch = input.match(/room\/([A-Za-z0-9_-]+)/);
+                        if (pathMatch) {
+                            roomCode = pathMatch[1];
+                        }
+                    }
+                }
+
+                // Validate the extracted room code
+                if (!/^[A-Za-z0-9_-]+$/.test(roomCode)) {
+                    joinError.textContent = 'Invalid room code format';
+                    joinError.style.display = 'block';
+                    return;
+                }
+
+                window.location.href = `room.html#room=${roomCode}`;
+            });
+
+            // Allow Enter key to join
+            roomCodeInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    joinBtn.click();
+                }
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

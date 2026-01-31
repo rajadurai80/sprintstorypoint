@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N495XG6269"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N495XG6269');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Sprint Story Point</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 50%, #f5f0ff 100%);
+            min-height: 100vh;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #3b82f6;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .section h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section p {
+            color: #475569;
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+        }
+
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Features List */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: all 0.2s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .feature-content strong {
+            display: block;
+            color: #1e293b;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .feature-content span {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Mission Card */
+        .mission-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+
+        .mission-card p {
+            font-size: 1.1rem;
+            color: #334155;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e293b;
+            color: #94a3b8;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 28px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">Sprint Story Point</a>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/pages/about.html" class="active">About</a>
+                <a href="/pages/contact.html">Contact</a>
+                <a href="/" class="btn-primary">Start Estimating</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>About Us</h1>
+        <p>Empowering agile teams with intuitive tools designed to optimize workflows, enhance collaboration, and drive continuous improvement.</p>
+    </section>
+
+    <div class="content">
+        <div class="section">
+            <h2>Our Mission</h2>
+            <div class="mission-card">
+                <p>To empower agile teams with intuitive, effective tools that streamline project management processes, facilitate collaboration, and drive continuous improvement. We believe in the power of agile practices to transform how teams work, and our goal is to make these practices accessible and easy to implement.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>What We Offer</h2>
+            <p>At Sprint Story Point, we offer a diverse range of agile tools to meet the needs of modern development teams:</p>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">&#128202;</div>
+                    <div class="feature-content">
+                        <strong>Retrospective Board</strong>
+                        <span>Capture and categorize feedback during retrospectives</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#128200;</div>
+                    <div class="feature-content">
+                        <strong>Burndown Charts</strong>
+                        <span>Visualize sprint progress and stay on track</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#128203;</div>
+                    <div class="feature-content">
+                        <strong>Kanban Board</strong>
+                        <span>Organize tasks with a flexible drag-and-drop interface</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#128506;</div>
+                    <div class="feature-content">
+                        <strong>Story Mapping</strong>
+                        <span>Create user story maps to prioritize the user journey</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#128101;</div>
+                    <div class="feature-content">
+                        <strong>Capacity Planning</strong>
+                        <span>Plan team capacity based on availability and skills</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#128172;</div>
+                    <div class="feature-content">
+                        <strong>Daily Standup Bot</strong>
+                        <span>Automate daily standups and keep your team aligned</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#128640;</div>
+                    <div class="feature-content">
+                        <strong>Velocity Tracker</strong>
+                        <span>Track team velocity over multiple sprints</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#128279;</div>
+                    <div class="feature-content">
+                        <strong>Dependency Tracker</strong>
+                        <span>Manage task dependencies and avoid bottlenecks</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#127919;</div>
+                    <div class="feature-content">
+                        <strong>Estimation Poker</strong>
+                        <span>Collaboratively estimate story points with your team</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#9888;</div>
+                    <div class="feature-content">
+                        <strong>Risk Management</strong>
+                        <span>Identify, assess, and track risks throughout sprints</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#128197;</div>
+                    <div class="feature-content">
+                        <strong>Release Planning</strong>
+                        <span>Plan and track releases with ease</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">&#129505;</div>
+                    <div class="feature-content">
+                        <strong>Team Health Check</strong>
+                        <span>Monitor team morale and productivity regularly</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Our Story</h2>
+            <p>Founded by an experienced agile practitioner and software developer, Sprint Story Point was born out of a need for better tools to support agile teams. With years of experience working in agile environments and facing common challenges, we created solutions that address these issues head-on.</p>
+            <p>What started as a simple planning poker tool has evolved into a comprehensive suite of agile tools, all designed with one goal in mind: making agile practices accessible, efficient, and enjoyable for teams of all sizes.</p>
+        </div>
+
+        <div class="section">
+            <h2>Our Commitment</h2>
+            <p>We are committed to continuous improvement and always looking for ways to enhance our tools and services. We value feedback from users and believe that collaboration is key to innovation.</p>
+            <p>Whether you're a small startup or a large enterprise, Sprint Story Point is here to support your agile journey. Thank you for choosing us. We're excited to be a part of your agile transformation.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Sprint Story Point. All rights reserved.</p>
+            <p style="margin-top: 8px;">
+                <a href="/">Home</a> &middot;
+                <a href="/pages/about.html">About</a> &middot;
+                <a href="/pages/contact.html">Contact</a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
